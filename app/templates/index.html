@@ -1,0 +1,38 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <h1>Welcome</h1>
+</head>
+
+
+<form method="POST" action="{{ url_for('main_bp.index') }}" class="col-6">
+  {{ form.hidden_tag() }}
+    <div class="form-group">
+    {{ form.user_text(class="form-control", id="user-text-area") }}
+        {{ form.socket_id(class="d-none", id="socket-id") }}
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div id="test-app">
+</div>
+
+<script>
+	$(document).ready(function() {
+		var socket = io.connect('http://127.0.0.1:5000');
+        var socket_id = socket.id
+		socket.on('connect', function() {
+			socket.send('User Connected')
+		});
+
+        {#TODO When reversed text is received, display on page#}
+        {#Append to text-app div#}
+		socket.on('message', function(results){
+		    var reversed_text = results['data']
+            $("$test-app").append('<p>'+reversed_text+'</p>')
+		});
+
+	});
+</script>
