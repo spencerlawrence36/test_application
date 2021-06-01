@@ -3,9 +3,9 @@ Test Application
 
 Python3 
 
-pip install -r requirements.txt
+1. pip install -r requirements.txt
 
-python test_app.py
+2. python test_app.py
 
 Celery: celery -A app.celery_tasks worker --loglevel=debug
 Cancel changes
